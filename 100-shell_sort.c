@@ -6,32 +6,51 @@
   * @size: The length of the array.
   * Return: Nothing.
   */
-void shell_sort(int *array, size_t size)
-{
-	unsigned int i = 0, j = 0, gap = 0;
-	int aux = 0;
+void shell_sort(int *array, size_t size) {
+    int interval = 1;
+    while (interval < size / 3) {
+        interval = interval * 3 + 1; // calculate Knuth sequence interval
+    }
 
-	if (array == NULL || size < 2)
-		return;
+    while (interval > 0) {
+        printf("Array after interval %d sorting: ", interval);
+        for (int i = interval; i < size; i++) {
+            int temp = array[i];
+            int j = i;
+            while (j >= interval && array[j - interval] > temp) {
+                array[j] = array[j - interval];
+                j -= interval;
+            }
+            array[j] = temp;
+        }
 
-	while (gap < size / 3)
-		gap = gap * 3 + 1;
+        // decrease the interval
+        interval = (interval - 1) / 3;
+        // print the current state of array
+        for (int i = 0; i < size; i++) {
+            printf("%d ", array[i]);
+        }
+        printf("\n");
+    }
+}
 
-	for (; gap > 0; gap = (gap - 1) / 3)
-	{
-		for (i = gap; i < size; i++)
-		{
-			aux = array[i];
-			for (j = i; j >= gap && array[j - gap] > aux;
-					j -= gap)
-			{
-				if (array[j] != array[j - gap])
-					array[j] = array[j - gap];
-			}
-			if (array[j] != aux)
-				array[j] = aux;
+int main() {
+    int arr[] = {45, 23, 76, 32, 82, 15, 68, 53};
+    size_t size = sizeof(arr) / sizeof(arr[0]);
 
-		}
-		print_array(array, size);
-	}
+    printf("Array before sorting: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    shell_sort(arr, size);
+
+    printf("Array after sorting: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
 }
