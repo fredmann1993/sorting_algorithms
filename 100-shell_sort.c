@@ -1,3 +1,5 @@
+#include "sort.h"
+
 /**
 * shell_sort - sorts an array of integers in ascending order using the
 *              Shell sort algorithm, using the Knuth sequence
@@ -36,7 +38,6 @@ gap = (gap - 1) / 3;
 
 if (gap % 4 == 0 && gap > 0)
 {
-printf("Array after sorting with gap %lu: ", gap);
 print_array(array, size);
 }
 }
